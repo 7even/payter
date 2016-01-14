@@ -23,7 +23,8 @@
                  [mount "0.1.8"]
                  [luminus-nrepl "0.1.2"]
                  [org.webjars/webjars-locator-jboss-vfs "0.1.0"]
-                 [luminus-immutant "0.1.0"]]
+                 [luminus-immutant "0.1.0"]
+                 [http-kit "2.1.18"]]
 
   :min-lein-version "2.0.0"
   :uberjar-name "payter.jar"
