@@ -11,7 +11,15 @@
        (clojure.string/join ";")))
 
 (defn request [endpoint params]
-  (let [{:keys [status body]} @(http/get (str host "/" endpoint) {:query-params {:data (encode-params params)}})]
+  (let [url (str host "/" endpoint)
+        params {:VWID (env :merchant-id)
+                :DATA (encode-params params)}
+        {:keys [status body]} @(http/get url {:query-params params})]
     (if (= status 200)
       (json/read-str body)
-      "error")))
+      (throw (Exception. (str "Payture returned " status ": " body))))))
+
+(defn get-list [{:keys [id pwd]}]
+  (request "vwapi/GetList"
+           {:VWUserLgn id
+            :VWUserPsw pwd}))
