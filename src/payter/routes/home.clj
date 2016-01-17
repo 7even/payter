@@ -5,11 +5,10 @@
             [clojure.java.io :as io]))
 
 (defn home-page []
-  (layout/render
-    "home.html" {:docs (-> "docs/docs.md" io/resource slurp)}))
+  (layout/base :home [:h2 "Hello from hiccup!"]))
 
 (defn about-page []
-  (layout/render "about.html"))
+  (layout/base :about [:h2 "About payter"]))
 
 (defroutes home-routes
   (GET "/" [] (home-page))
