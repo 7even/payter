@@ -1,0 +1,7 @@
+<GetList Success="True" VWUserLgn="Tester@payture.com">
+  <Item CardName="411111xxxxxx1112" CardId="e5dfa016-27e0-45bb-8167-44299642b529" CardHolder="Tester" Status="NotActive" NoCVV="false" Expired="false" />
+  <Item CardName="411111xxxxxx1111" CardId="001f2def-64e9-4cef-ae02-aa2bd9508a8b" CardHolder="User" Status="IsActive" NoCVV="true" Expired="false">
+    <Param Key="LastSuccess" Value="2014.06.24 12:42:14" />
+    <Param Key="LastLessSecureCode:VWMerchantTest" Value="True" />
+  </Item>
+</GetList>
