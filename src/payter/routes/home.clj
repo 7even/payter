@@ -14,11 +14,11 @@
            [:div.form-group
             [:label.col-sm-2.control-label {:for "login"} "Login"]
             [:div.col-sm-10
-             (text-field {:class "form-control" :id "login" :placeholder "your login"} "login")]]
+             (text-field {:class "form-control" :id "login" :placeholder "your login"} "login" login)]]
            [:div.form-group
             [:label.col-sm-2.control-label {:for "password"} "Password"]
             [:div.col-sm-10
-             (password-field {:class "form-control" :id "password" :placeholder "your password"} "password")]]
+             (password-field {:class "form-control" :id "password" :placeholder "your password"} "password" password)]]
            [:div.form-group
             [:div.col-sm-offset-2.col-sm-10
              [:button.btn.btn-default {:type "submit"} "Get cards list"]]]))
