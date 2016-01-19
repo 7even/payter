@@ -20,9 +20,7 @@
   (->> raw-response-body
        .getBytes
        java.io.ByteArrayInputStream.
-       xml/parse
-       :content
-       (map :attrs)))
+       xml/parse))
 
 (defn request [endpoint params]
   (let [url (str host "/" endpoint)
@@ -34,6 +32,18 @@
       (throw (Exception. (str "Payture returned " status ": " body))))))
 
 (defn get-list [{:keys [id pwd]}]
-  (request "vwapi/GetList"
-           {:VWUserLgn id
-            :VWUserPsw pwd}))
+  (let [params {:VWUserLgn id
+                :VWUserPsw pwd}
+        data (request "vwapi/GetList" params)]
+    (map :attrs (:content data))))
+
+(defn add-card [{:keys [id pwd number month year holder cvv]}]
+  (let [params {:VWUserLgn id
+                :VWUserPsw pwd
+                :CardNumber number
+                :CardHolder holder
+                :SecureCode cvv
+                :EMonth month
+                :EYear year}
+        data (request "vwapi/Add" params)]
+    (:attrs data)))
