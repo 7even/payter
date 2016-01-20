@@ -47,3 +47,10 @@
                 :EYear year}
         data (request "vwapi/Add" params)]
     (:attrs data)))
+
+(defn remove-card [{:keys [id pwd token]}]
+  (let [params {:VWUserLgn id
+                :VWUserPsw pwd
+                :CardId token}
+        data (request "vwapi/Remove" params)]
+    (:attrs data)))
