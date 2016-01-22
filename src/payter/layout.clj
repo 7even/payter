@@ -50,30 +50,32 @@
        [:li (link-to url text)]))])
 
 (defn base [active-page & content]
-  (html5
-   [:head
-    [:title "Payter"]
-    (include-css "/assets/bootstrap/css/bootstrap.min.css"
-                 "/assets/bootstrap/css/bootstrap-theme.min.css"
-                 "/css/screen.css")
-    (include-js "/assets/jquery/jquery.min.js"
-                "/assets/bootstrap/js/bootstrap.min.js"
-                "/assets/bootstrap/js/collapse.js")]
-   [:body
-    [:div#navbar
-     [:nav.navbar.navbar-inverse.navbar-fixed-top
-      [:div.container
-       [:div.navbar-header
-        [:button.navbar-toggle {:data-target "#app-navbar"
-                                :data-toggle "collapse"
-                                :aria-expanded "false"
-                                :aria-controls "navbar"}
-         [:span.sr-only "Toggle Navigation"]
-         [:span.icon-bar]
-         [:span.icon-bar]
-         [:span.icon-bar]]
-        (link-to {:class "navbar-brand"} "/" "Payter")]
-       [:div#app-navbar.navbar-collapse.collapse
-        (menu active-page)]]]]
+  (-> (html5
+       [:head
+        [:title "Payter"]
+        (include-css "/assets/bootstrap/css/bootstrap.min.css"
+                     "/assets/bootstrap/css/bootstrap-theme.min.css"
+                     "/css/screen.css")
+        (include-js "/assets/jquery/jquery.min.js"
+                    "/assets/bootstrap/js/bootstrap.min.js"
+                    "/assets/bootstrap/js/collapse.js")]
+       [:body
+        [:div#navbar
+         [:nav.navbar.navbar-inverse.navbar-fixed-top
+          [:div.container
+           [:div.navbar-header
+            [:button.navbar-toggle {:data-target "#app-navbar"
+                                    :data-toggle "collapse"
+                                    :aria-expanded "false"
+                                    :aria-controls "navbar"}
+             [:span.sr-only "Toggle Navigation"]
+             [:span.icon-bar]
+             [:span.icon-bar]
+             [:span.icon-bar]]
+            (link-to {:class "navbar-brand"} "/" "Payter")]
+           [:div#app-navbar.navbar-collapse.collapse
+            (menu active-page)]]]]
 
-    [:div.container content]]))
+        [:div.container content]])
+      ok
+      (content-type "text/html; charset=utf-8")))

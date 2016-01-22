@@ -2,6 +2,7 @@
   (:require [compojure.core :refer [defroutes routes wrap-routes]]
             [payter.layout :refer [error-page]]
             [payter.routes.home :refer [home-routes]]
+            [payter.routes.auth :refer [auth-routes]]
             [payter.middleware :as middleware]
             [clojure.tools.logging :as log]
             [compojure.route :as route]
@@ -33,6 +34,7 @@
 (def app-routes
   (routes
     (wrap-routes #'home-routes middleware/wrap-csrf)
+    auth-routes
     (route/not-found
       (:body
         (error-page {:status 404
