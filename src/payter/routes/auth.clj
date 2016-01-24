@@ -28,8 +28,10 @@
    (form nil nil)))
 
 (defn submit-sign-in [login password {session :session}]
-  (-> (redirect "/" :see-other)
-      (assoc :session (assoc session :user-id login :user-password password))))
+  (assoc
+    (redirect "/" :see-other)
+    :session
+    (assoc session :user-id login :user-password password)))
 
 (defroutes auth-routes
   (GET "/sign-in" [] (sign-in-page))

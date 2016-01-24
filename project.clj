@@ -33,7 +33,8 @@
 
   :main payter.core
 
-  :plugins [[lein-environ "1.0.1"]]
+  :plugins [[lein-environ "1.0.1"]
+            [lein-kibit "0.1.2"]]
   :profiles
   {:uberjar {:omit-source true
              :env {:production true}
