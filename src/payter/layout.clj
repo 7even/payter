@@ -42,11 +42,10 @@
 
 (defn menu [active-page]
   [:ul.nav.navbar-nav
-   (for [[url text] [["/" "Home"]
-                     ["/about" "About"]
-                     ["/sign-in" "Sign in"]]]
-     (if (= (clojure.string/capitalize (name active-page))
-            text)
+   (for [[url text page-id] [["/" "Home" :home]
+                             ["/about" "About" :about]
+                             ["/sign-in" "Sign in" :sign-in]]]
+     (if (= active-page page-id)
        [:li.active (link-to url text)]
        [:li (link-to url text)]))])
 
