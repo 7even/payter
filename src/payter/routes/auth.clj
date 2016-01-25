@@ -22,10 +22,15 @@
              [:div.col-sm-offset-2.col-sm-10
               [:button.btn.btn-default {:type "submit"} "Sign in"]]]))
 
-(defn sign-in-page []
+(defn sign-in-page [{session :session}]
   (layout/base
    :sign-in
-   (form nil nil)))
+   (form nil nil)
+   [:div.col-sm-offset-2.col-sm-10
+    [:h3 "Logged in accounts"]
+    [:ul
+     (for [account (:accounts session)]
+       [:li (:user-id account)])]]))
 
 (defn submit-sign-in [login password {session :session}]
   (let [new-session (assoc session
@@ -36,5 +41,5 @@
     (assoc (redirect "/" :see-other) :session new-session)))
 
 (defroutes auth-routes
-  (GET "/sign-in" [] (sign-in-page))
+  (GET "/sign-in" request (sign-in-page request))
   (POST "/sign-in" [login password :as request] (submit-sign-in login password request)))
