@@ -29,15 +29,11 @@
    [:div.col-sm-offset-2.col-sm-10
     [:h3 "Logged in accounts"]
     [:ul
-     (for [account (:accounts session)]
-       [:li (:user-id account)])]]))
+     (for [account (-> session :accounts keys)]
+       [:li account])]]))
 
 (defn submit-sign-in [login password {session :session}]
-  (let [new-session (assoc session
-                      :accounts (conj
-                                 (:accounts session)
-                                 {:user-id login
-                                  :user-password password}))]
+  (let [new-session (assoc-in session [:accounts login] password)]
     (assoc (redirect "/" :see-other) :session new-session)))
 
 (defroutes auth-routes
