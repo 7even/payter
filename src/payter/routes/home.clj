@@ -1,7 +1,7 @@
 (ns payter.routes.home
   (:require [payter.layout :as layout]
             [payter.api :as api]
-            [compojure.core :refer [defroutes GET POST]]
+            [compojure.core :refer [defroutes GET POST DELETE]]
             [ring.util.response :refer [redirect]]
             [ring.util.http-response :refer [ok]]
             [ring.util.anti-forgery :refer [anti-forgery-field]]
@@ -49,7 +49,13 @@
              [:td (:Status card)]
              [:td (:NoCVV card)]
              [:td (:Expired card)]
-             [:td (:CardId card)]])]]
+             (let [token (:CardId card)]
+               [:td
+                (form-to [:delete (str "/cards/" token)]
+                         (hidden-field "user-id" user-id)
+                         (anti-forgery-field)
+                         [:button.close {:type "submit"} "&times;"])
+                token])])]]
         [:button.btn.btn-primary {:data-toggle "modal" :data-target "#add"} "Add a new card"]
         [:div#add.modal.fade
          [:div.modal-dialog.modal-sm
@@ -113,6 +119,14 @@
     ;; TODO: handle payture errors
     (redirect (str "/cards?user-id=" user-id))))
 
+(defn delete-card-page [user-id token session]
+  (let [password (get-in session [:accounts user-id])
+        result (api/remove-card {:id user-id
+                                 :pwd password
+                                 :token token})]
+    ;; TODO: handle payture errors
+    (redirect (str "/cards?user-id=" user-id))))
+
 (defn about-page []
   (layout/base :about [:h2 "About payter"]))
 
@@ -121,4 +135,5 @@
   (GET "/cards" [user-id :as {session :session}] (cards-list-page user-id session))
   (POST "/add-card" [user-id number holder expiration-date cvv :as {session :session}]
         (add-card-page user-id number holder expiration-date cvv session))
+  (DELETE "/cards/:token" [user-id token :as {session :session}] (delete-card-page user-id token session))
   (GET "/about" [] (about-page)))
